@@ -1,5 +1,5 @@
 def label = "jenkins-docker-${UUID.randomUUID().toString()}" 
-def registry = 'registry.dev-ops.kr/sockshop' 
+def imageurl = 'registry.dev-ops.kr/sockshop:latest' 
  
 podTemplate(label: label,   
     containers: [   
@@ -23,7 +23,14 @@ podTemplate(label: label,
                 } 
             } 
              
-     
+      stage ('docker build') {
+	      		container('docker') { 
+            sh ("docker build -t registry.dev-ops.kr/sockshop:latest .")
+            writeFile file: 'anchore_images', text: imageurl
+            anchore name: 'anchore_images'
+	 	       	
+		     	}
+	   	}
         
     }   
 }   
