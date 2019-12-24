@@ -24,6 +24,6 @@ podTemplate(label: label,
             } 
              
      
-        } 
+        
     }   
 }   
